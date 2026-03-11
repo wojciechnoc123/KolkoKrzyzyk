@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -7,8 +6,6 @@ public class Game {
     public final int gridRows = 3;
     public final int gridCols = 3;
     public final int gridSize = 3;
-    public Random rng = new Random();
-
     private char winningSide = '_';
 
 
@@ -63,35 +60,6 @@ public class Game {
         System.out.println();
     }
 
-    public void readState(String input) {
-        boolean correctInput = true;
-        if (input.length() == 9) {
-            for (int i = 0; i < 9;i++) {
-                if (input.charAt(i) == 'O' || input.charAt(i) == 'X' || input.charAt(i) == '_'){
-
-                }
-                else {
-                    correctInput = false;
-                    break;
-                }
-            }
-            if (correctInput) {
-                for (int i = 0; i < gridSize; i++) {
-                    for (int j = 0; j < gridSize; j++) {
-                        grid[i][j] = input.charAt(i*gridSize + j);
-                    }
-                }
-            }
-            else {
-                System.out.println("Incorrect character in input!");
-            }
-        }
-        else {
-            System.out.println("Incorrect length of input!");
-        }
-
-    }
-
     public void analyseStateGame() {
         int numberX = 0;
         int numberO = 0;
@@ -116,29 +84,16 @@ public class Game {
             return;
         }
 
-        //checkEverything();
         checkResult();
 
         if (winningSide != '_' && isFinished == true) {
             System.out.println(winningSide + " wins");
         }
-        else if (winningSide == '_' && isFinished == true) {
-            System.out.println("Impossible2");
-        }
         else if (numberEmpty == 0){
             System.out.println("Draw");
             isFinished = true;
         }
-        else if (numberEmpty > 0) {
-            //    System.out.println("Game not finished");
-        }
-
-
-
     }
-
-
-
 
     public void checkResult() {
         char checked;
@@ -205,44 +160,9 @@ public class Game {
             }
         }
 
-
-
-
         winningSide = '_';
         isFinished = false;
         return;
-    }
-
-
-    public boolean testPosition(String input) {
-        try {
-            if (input.contains(" ")) {
-                int x = Integer.parseInt(input.substring(0, input.indexOf(' ')));
-                int y = Integer.parseInt(input.substring(input.indexOf(' ') + 1));
-                if (x > 0 && x < 4 && y > 0 && y < 4) {
-
-                    if (grid[x - 1][y - 1] == '_') {
-                        grid[x - 1][y - 1] = 'X';
-                        printState();
-                        return true;
-                    } else {
-                        System.out.println("The cell is occupied! Choose anoter one!");
-                        return false;
-                    }
-                } else {
-                    System.out.println("Cordinates should be from 1 to 3!");
-                    return false;
-                }
-            }
-            else {
-                System.out.println("You should enter numbers!");
-                return false;
-            }
-        }
-        catch (NumberFormatException e) {
-            System.out.println("You should enter  numbers!");
-        }
-        return false;
     }
 
     public boolean testPosition(String input,char side) {
@@ -276,19 +196,17 @@ public class Game {
         return false;
     }
 
-
-
-
-
-
-
     public void playTwoPlayers() {
+        String startingInfo = "You will be playing tic tac toe. \nYou will take turns in passing position of either X/O"
+                            + "to the game by writing writing coridantes like as X Y.";
+        System.out.println(startingInfo);
         Scanner sc = new Scanner(System.in);
         printState();
         String singlePosition;
         boolean testPosition = false;
         while (!isFinished) {
             while (!testPosition && !isFinished) {
+                System.out.println("X side:");
                 singlePosition = sc.nextLine();
                 testPosition = testPosition(singlePosition,'X');
             }
@@ -296,6 +214,7 @@ public class Game {
                 analyseStateGame();
             testPosition = false;
             while (!testPosition && !isFinished) {
+                System.out.println("O side");
                 singlePosition = sc.nextLine();
                 testPosition = testPosition(singlePosition,'O');
             }
@@ -304,9 +223,36 @@ public class Game {
                 analyseStateGame();
         }
 
-
         sc.close();
     }
 
+    public void readState(String input) {
+        boolean correctInput = true;
+        if (input.length() == 9) {
+            for (int i = 0; i < 9;i++) {
+                if (!(input.charAt(i) == 'O' || input.charAt(i) == 'X' || input.charAt(i) == '_')){
+                    correctInput = false;
+                    break;
+                }
+                else {
+
+                }
+            }
+            if (correctInput) {
+                for (int i = 0; i < gridSize; i++) {
+                    for (int j = 0; j < gridSize; j++) {
+                        grid[i][j] = input.charAt(i*gridSize + j);
+                    }
+                }
+            }
+            else {
+                System.out.println("Incorrect character in input!");
+            }
+        }
+        else {
+            System.out.println("Incorrect length of input!");
+        }
+
+    }
 
 }
