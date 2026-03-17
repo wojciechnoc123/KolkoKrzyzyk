@@ -197,8 +197,9 @@ public class Game {
     }
 
     public void playTwoPlayers() {
-        String startingInfo = "You will be playing tic tac toe. \nYou will take turns in passing position of either X/O"
-                            + "to the game by writing writing coridantes like as X Y.";
+        String startingInfo = "You will be playing tic tac toe. \n"
+                + "You will take turns in passing position as either X/O"
+                + "to the game by writing writing coridantes like as ROW COLUMN for example 2 3.";
         System.out.println(startingInfo);
         Scanner sc = new Scanner(System.in);
         printState();
