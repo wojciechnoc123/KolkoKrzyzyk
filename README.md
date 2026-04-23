@@ -1,2 +1,2 @@
 # KolkoKrzyzyk
-KolkoKrzyzyk tekst dolny
+KolkoKrzyzyk
